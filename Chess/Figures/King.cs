@@ -25,6 +25,18 @@ namespace Chess.Figures
             return false;
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is King king &&
+                   Type == king.Type &&
+                   Color == king.Color;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Type, Color);
+        }
+
         public override IEnumerable<Point> Way(int x1, int y1, int x2, int y2)
         {
             yield return new Point(x1, y1);

@@ -5,7 +5,7 @@ using Chess.Enum;
 
 namespace Chess.Figures
 {
-    class Pawn : Figure
+    internal class Pawn : Figure
     {
         public Pawn (Color color)
         {
@@ -74,6 +74,19 @@ namespace Chess.Figures
         {
             yield return new Point(point1.X, point1.Y);
             yield return new Point(point2.X, point2.Y);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Pawn pawn &&
+                   base.Equals(obj) &&
+                   Type == pawn.Type &&
+                   Color == pawn.Color;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(base.GetHashCode(), Type, Color);
         }
     }
 }

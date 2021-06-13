@@ -25,6 +25,19 @@ namespace Chess.Figures
             return false;
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is Rook rook &&
+                   base.Equals(obj) &&
+                   Type == rook.Type &&
+                   Color == rook.Color;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(base.GetHashCode(), Type, Color);
+        }
+
         public override IEnumerable<Point> Way(int x1, int y1, int x2, int y2)
         {
             if (x2 < x1 && y2 == y1)

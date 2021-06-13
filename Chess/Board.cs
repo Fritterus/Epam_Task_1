@@ -9,6 +9,7 @@ namespace Chess
 {
     internal class ClassicBoard : IBoard
     {
+        private const int _boardSize = 8; 
         private readonly IPlayer _player1;
         private readonly IPlayer _player2;
         private IPlayer _currentPlayer;
@@ -29,11 +30,11 @@ namespace Chess
                 _currentPlayer = player2;
             }
 
-            Spaces = new Space[8, 8];
+            Spaces = new Space[_boardSize, _boardSize];
 
-            for (var i = 0; i < 8; i++)
+            for (var i = 0; i < _boardSize; i++)
             {
-                for (var j = 0; j < 8; j++)
+                for (var j = 0; j < _boardSize; j++)
                 {
                     Spaces[i, j] = new Space(i, j);
                 }
@@ -68,7 +69,7 @@ namespace Chess
         public void Turn(Point point1, Point point2)
         {
 
-            if (point1.X == point2.X && point1.X == point2.Y)
+            if (point1.X == point2.X && point1.Y == point2.Y)
             {
                 throw new Exception("Can't move to the same place");
             }
@@ -103,13 +104,13 @@ namespace Chess
             {
                 if (GetSpace(figureWay[i]).Figure != null)
                 {
-                    throw new Exception();
+                    throw new Exception("");
                 }
                 
             }
             if (GetSpace(figureWay.Last()).Figure.Color == _currentPlayer.Color)
             {
-                throw new Exception("Allied figure is here");
+                throw new Exception("Can't attack allied figure");
             }
             if (GetSpace(figureWay.Last()).Figure.Color != _currentPlayer.Color)
             {
@@ -140,7 +141,7 @@ namespace Chess
         public void InitStartPosition()
         {
             //initialization white figures
-            for (var i = 0; i < 8; i++)
+            for (var i = 0; i < _boardSize; i++)
             {
                 Spaces[6, i].Figure = new Pawn(Color.White);
             }
@@ -155,7 +156,7 @@ namespace Chess
             Spaces[7, 7].Figure = new Rook(Color.White);    
 
             //initialization black figures
-            for (var i = 0; i < 8; i++)
+            for (var i = 0; i < _boardSize; i++)
             {
                 Spaces[1, i].Figure = new Pawn(Color.Black);
             }

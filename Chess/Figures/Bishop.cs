@@ -21,8 +21,20 @@ namespace Chess.Figures
 
         public override bool CanMoveTo(Point point1, Point point2)
         {
-            if (Math.Abs(point2.X - point1.X) == Math.Abs(point1.Y - point2.X)) return true;
+            if (Math.Abs(point2.X - point1.X) == Math.Abs(point2.Y - point1.Y)) return true;
             return false;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Bishop bishop &&
+                   Type == bishop.Type &&
+                   Color == bishop.Color;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Type, Color);
         }
 
         public override IEnumerable<Point> Way(int x1, int y1, int x2, int y2)

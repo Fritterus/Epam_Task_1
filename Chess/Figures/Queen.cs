@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Chess.Enum;
 
 namespace Chess.Figures
@@ -23,6 +24,21 @@ namespace Chess.Figures
         public override bool CanMoveTo(Point point1, Point point2)
         {
             return _bishop.CanMoveTo(point1.X, point1.Y, point2.X, point2.Y) || _rook.CanMoveTo(point1.X, point1.Y, point2.X, point2.Y);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Queen queen &&
+                   base.Equals(obj) &&
+                   Type == queen.Type &&
+                   Color == queen.Color &&
+                   EqualityComparer<Bishop>.Default.Equals(_bishop, queen._bishop) &&
+                   EqualityComparer<Rook>.Default.Equals(_rook, queen._rook);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(base.GetHashCode(), Type, Color, _bishop, _rook);
         }
 
         public override IEnumerable<Point> Way(int x1, int y1, int x2, int y2)
