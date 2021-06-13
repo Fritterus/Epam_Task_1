@@ -46,7 +46,7 @@ namespace Chess
 
         public void NextTurn()
         {
-            if (_player1 == _currentPlayer)
+            if (_player1.Equals(_currentPlayer))
             {
                 _currentPlayer = _player2;
             }
@@ -82,10 +82,6 @@ namespace Chess
 
             if (!GetSpace(point1).CanFigureMoveTo(point2))
             {
-                throw new Exception("This figure can't move like that");
-            }
-            else
-            {
                 if (GetFigure(point1) is Pawn)
                 {
                     var pawn = (Pawn)GetFigure(point1);
@@ -94,7 +90,10 @@ namespace Chess
                     {
                         throw new Exception("Can't attack this figure");
                     }
-
+                }
+                else
+                {
+                    throw new Exception("This figure can't move like that");
                 }
             }
 
@@ -108,17 +107,19 @@ namespace Chess
                 }
                 
             }
+
+            if (GetSpace(figureWay.Last()).Figure == null)
+            {
+                GetSpace(figureWay.Last()).Figure = GetSpace(figureWay.First()).Figure;
+                GetSpace(figureWay.First()).Figure = null;
+                NextTurn();
+                return;
+            }
             if (GetSpace(figureWay.Last()).Figure.Color == _currentPlayer.Color)
             {
                 throw new Exception("Can't attack allied figure");
             }
             if (GetSpace(figureWay.Last()).Figure.Color != _currentPlayer.Color)
-            {
-                GetSpace(figureWay.Last()).Figure = GetSpace(figureWay.First()).Figure;
-                GetSpace(figureWay.First()).Figure = null;
-                NextTurn();
-            }
-            if (GetSpace(figureWay.Last()).Figure == null)
             {
                 GetSpace(figureWay.Last()).Figure = GetSpace(figureWay.First()).Figure;
                 GetSpace(figureWay.First()).Figure = null;
