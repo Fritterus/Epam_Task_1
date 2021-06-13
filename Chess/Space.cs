@@ -26,7 +26,24 @@ namespace Chess
             return Figure.Way(X, Y, point.X, point.Y);
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is Space space &&
+                   X == space.X &&
+                   Y == space.Y &&
+                   EqualityComparer<Figure>.Default.Equals(Figure, space.Figure);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(X, Y, Figure);
+        }
+
         public Figure Figure { get; set; }
-        
+
+        public override string ToString()
+        {
+            return string.Format($"Coordinate X = {X} \n Coordinate Y = {Y}");
+        }
     }
 }
