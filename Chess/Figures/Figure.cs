@@ -30,6 +30,10 @@ namespace Chess.Figures
         public abstract IEnumerable<Point> Way(int x1, int y1, int x2, int y2);
         public abstract IEnumerable<Point> Way(Point point1, Point point2);
 
+        public override string ToString()
+        {
+            return string.Format($"Figure Type: {Type} \n Figure Color: {Color}");
+        }
     }
 
 }
