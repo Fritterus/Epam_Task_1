@@ -16,5 +16,22 @@ namespace Chess
         {
             _color = color;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Player player &&
+                   _color == player._color &&
+                   Color == player.Color;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_color, Color);
+        }
+
+        public override string ToString()
+        {
+            return string.Format($"Player Color: {Color}");
+        }
     }
 }
