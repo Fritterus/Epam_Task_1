@@ -92,6 +92,11 @@ namespace Chess
                 {
                     var pawn = (Pawn)GetFigure(point1);
 
+                    if (GetSpace(point2).Figure != null && pawn.CanJumpTo(point1, point2))
+                    {
+                        throw new Exception("Pawn can't jump to this space");
+                    }
+
                     if (!(GetFigure(point2).Color != _currentPlayer.Color && pawn.CanAttack(point1, point2)))
                     {
                         throw new Exception("Can't attack this figure");

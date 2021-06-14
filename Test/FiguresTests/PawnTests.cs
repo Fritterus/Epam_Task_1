@@ -22,7 +22,31 @@ namespace Test
         }
 
         [Test]
-        public void CanMoveTo_WhenCoordinateIsNotCorrect_ShouldReturnFalse()
+        public void CanMoveTo_WhenPawnJumpFromStartPosition_ShouldReturnTrue()
+        {
+            // Act
+            var pawn = new Pawn(Color.White);
+
+            var result = pawn.CanJumpTo(6, 2, 4, 2);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void CanMoveTo_WhenPawnJumpFromNonStartPosition_ShouldReturnFalse()
+        {
+            // Act
+            var pawn = new Pawn(Color.White);
+
+            var result = pawn.CanJumpTo(5, 2, 3, 2);
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void CanMoveTo_WhenPawnMoveBack_ShouldReturnFalse()
         {
             // Act
             var pawn = new Pawn(Color.White);

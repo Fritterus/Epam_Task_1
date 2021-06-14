@@ -60,6 +60,46 @@ namespace Chess.Figures
         }
 
         /// <summary>
+        /// Method describing jump of pawn, if its at the start position
+        /// </summary>
+        /// <param name="x1">Start X-coordinate </param>
+        /// <param name="y1">Start Y-coordinate</param>
+        /// <param name="x2">End X-coordinate</param>
+        /// <param name="y2">End Y-coordinate</param>
+        /// <returns>True, if pawn can jump, otherwise - false</returns>
+        public bool CanJumpTo(int x1, int y1, int x2, int y2)
+        {
+            if (x1 == 1 && (x2 - x1) == 2 && (y2 == y1) && Color == Color.Black)
+            {
+                return true;
+            }
+            if (x1 == 6 && (x2 - x1) == -2 && (y2 == y1) && Color == Color.White)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Method describing jump of pawn, if its at the start position 
+        /// </summary>
+        /// <param name="point1">Start coordinate</param>
+        /// <param name="point2">Target coordinate</param>
+        /// <returns>True, if pawn can jump, otherwise - false</returns>
+        public bool CanJumpTo(Point point1, Point point2)
+        {
+            if (point1.X == 1 && (point2.X - point1.X) == 2 && (point2.Y == point1.Y) && Color == Color.Black)
+            {
+                return true;
+            }
+            if (point1.X == 6 && (point2.X - point1.X) == -2 && (point2.Y == point1.Y) && Color == Color.White)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Method discribing rule of attack for pawn
         /// </summary>
         /// <param name="x1">Start X-coordinate </param>
