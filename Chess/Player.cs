@@ -1,17 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Chess.Enum;
 using Chess.Interfaces;
 
 namespace Chess
 {
+    /// <summary>
+    /// Class describing player
+    /// </summary>
     internal class Player : IPlayer
     {
+        /// <summary>
+        /// Private field color
+        /// </summary>
         private Color _color;
 
+        /// <summary>
+        /// Property player color
+        /// </summary>
         public Color Color => _color;
 
+        /// <summary>
+        /// Constructor initializes player color
+        /// </summary>
+        /// <param name="color">Player color</param>
         public Player (Color color)
         {
             _color = color;
