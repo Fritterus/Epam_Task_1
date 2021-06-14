@@ -1,14 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Chess
 {
+    /// <summary>
+    /// Struct describing coordinates
+    /// </summary>
     internal struct Point
     {
+        /// <summary>
+        /// Property X-coordinate
+        /// </summary>
         public int X { get; private set; }
+
+        /// <summary>
+        /// Property Y-coordinate
+        /// </summary>
         public int Y { get; private set; }
 
+        /// <summary>
+        /// Constructor initializes coordinates x and y
+        /// </summary>
+        /// <param name="x">x-coordinate</param>
+        /// <param name="y">y-coordinate</param>
         public Point (int x, int y)
         {
             X = x;
