@@ -2,11 +2,13 @@
 using Chess.Enum;
 using Chess.Figures;
 using Chess.Interfaces;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Chess
 {
+    /// <summary>
+    /// Class describing chessboard and chess game
+    /// </summary>
     internal class ClassicBoard : IBoard
     {
         private const int _boardSize = 8; 
@@ -44,6 +46,9 @@ namespace Chess
 
         }
 
+        /// <summary>
+        /// Method switch player after turn
+        /// </summary>
         public void NextTurn()
         {
             if (_player1.Equals(_currentPlayer))
@@ -62,18 +67,19 @@ namespace Chess
         }
 
         /// <summary>
-        /// Moves 
+        /// Method describing turn of player on the chess board 
         /// </summary>
         /// <param name="point1">Start coordinate</param>
-        /// <param name="point2">End coordinate</param>
+        /// <param name="point2">Target coordinate</param>
         public void Turn(Point point1, Point point2)
         {
-
+            //Exception, if start coordinate equal target coordinate
             if (point1.X == point2.X && point1.Y == point2.Y)
             {
                 throw new Exception("Can't move to the same place");
             }
 
+            //Exception, if player moves chess figure that is not his color
             if (!CanCurrentPlayerMoveFigure(GetFigure(point1)))
             {
                 throw new Exception("Can't move enemy figures");
@@ -101,13 +107,15 @@ namespace Chess
 
             for (var i = 1; i < figureWay.Count - 2; i++)
             {
+                //Exception, if any figure is in the path
                 if (GetSpace(figureWay[i]).Figure != null)
                 {
-                    throw new Exception("");
+                    throw new Exception("Figure stands in the path");
                 }
                 
             }
 
+            //Moves the chess figure to target coordinate, if figure on target coordinate is null 
             if (GetSpace(figureWay.Last()).Figure == null)
             {
                 GetSpace(figureWay.Last()).Figure = GetSpace(figureWay.First()).Figure;
@@ -115,10 +123,14 @@ namespace Chess
                 NextTurn();
                 return;
             }
+
+            //Exception, if figure color on target coordinate equal current player color
             if (GetSpace(figureWay.Last()).Figure.Color == _currentPlayer.Color)
             {
                 throw new Exception("Can't attack allied figure");
             }
+
+            //Attack the figure, if figure color on target coordinate not equal current player color
             if (GetSpace(figureWay.Last()).Figure.Color != _currentPlayer.Color)
             {
                 GetSpace(figureWay.Last()).Figure = GetSpace(figureWay.First()).Figure;
@@ -131,9 +143,15 @@ namespace Chess
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="point">Coordinate</param>
-        /// <returns></returns>
+        /// <param name="point">Target coordinate</param>
+        /// <returns>Space(square) on the current coordinates</returns>
         public Space GetSpace(Point point) => Spaces[point.X, point.Y];
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="point">Target coordinates</param>
+        /// <returns>Figure on the current coordinates</returns>
         public Figure GetFigure(Point point) => GetSpace(point).Figure;
 
         /// <summary>
@@ -172,6 +190,11 @@ namespace Chess
             Spaces[0, 7].Figure = new Rook(Color.Black);
         }
 
+        /// <summary>
+        /// Method that allows move figures of only one color
+        /// </summary>
+        /// <param name="figure">Current chess figure</param>
+        /// <returns>True, if current player color equal current figure color, otherwise - false</returns>
         public bool CanCurrentPlayerMoveFigure(Figure figure)
         {
             return _currentPlayer.Color == figure.Color;
